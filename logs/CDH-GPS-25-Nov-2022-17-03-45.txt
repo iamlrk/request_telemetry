@@ -1,0 +1,87 @@
+DEBUG|CDH|CDH v0.2
+DEBUG|CDH|Setting up SPI
+DEBUG|CDH|FreeMemory|4965
+DEBUG|CDH|Hotplug state: ADC[1] COMM[1] EXP1[1] SPARE[0]
+DEBUG|CDH|Separation [Separated]
+DEBUG|CDH|TelemGen|45
+DEBUG|CDH|T|CDH|GPS,0/1/1T0:0:0,0,0,0,0,0|SEP,1,1,1,1,0
+DEBUG|CDH|Writing SPI to pin (28): C|EPS|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (27): C|ADC|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (29): C|EXP|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|FreeMemory|4965
+DEBUG|CDH|Hotplug state: ADC[1] COMM[1] EXP1[1] SPARE[0]
+DEBUG|CDH|Separation [Separated]
+DEBUG|CDH|TelemGen|45
+DEBUG|CDH|T|CDH|GPS,0/1/1T0:0:0,0,0,0,0,0|SEP,1,1,1,1,0
+DEBUG|CDH|Writing SPI to pin (28): C|EPS|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (27): C|ADC|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (29): C|EXP|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|FreeMemory|4965
+DEBUG|CDH|Hotplug state: ADC[1] COMM[1] EXP1[1] SPARE[0]
+DEBUG|CDH|Separation [Separated]
+DEBUG|CDH|TelemGen|45
+DEBUG|CDH|T|CDH|GPS,0/1/1T0:0:0,0,0,0,0,0|SEP,1,1,1,1,0
+DEBUG|CDH|Writing SPI to pin (28): C|EPS|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (27): C|ADC|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (29): C|EXP|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|FreeMemory|4965
+DEBUG|CDH|Hotplug state: ADC[1] COMM[1] EXP1[1] SPARE[0]
+DEBUG|CDH|Separation [Separated]
+DEBUG|CDH|TelemGen|45
+DEBUG|CDH|T|CDH|GPS,0/1/1T0:0:0,0,0,0,0,0|SEP,1,1,1,1,0
+DEBUG|CDH|Writing SPI to pin (28): C|EPS|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (27): C|ADC|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (29): C|EXP|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|FreeMemory|4965
+DEBUG|CDH|Hotplug state: ADC[1] COMM[1] EXP1[1] SPARE[0]
+DEBUG|CDH|Separation [Separated]
+DEBUG|CDH|TelemGen|45
+DEBUG|CDH|T|CDH|GPS,0/1/1T0:0:0,0,0,0,0,0|SEP,1,1,1,1,0
+DEBUG|CDH|Writing SPI to pin (28): C|EPS|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (27): C|ADC|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (29): C|EXP|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|FreeMemory|4965
+DEBUG|CDH|Hotplug state: ADC[1] COMM[1] EXP1[1] SPARE[0]
+DEBUG|CDH|Separation [Separated]
+DEBUG|CDH|TelemGen|45
+DEBUG|CDH|T|CDH|GPS,0/1/1T0:0:0,0,0,0,0,0|SEP,1,1,1,1,0
+DEBUG|CDH|Writing SPI to pin (28): C|EPS|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (27): C|ADC|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (29): C|EXP|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|FreeMemory|4965
+DEBUG|CDH|Hotplug state: ADC[1] COMM[1] EXP1[1] SPARE[0]
+DEBUG|CDH|Separation [Separated]
+DEBUG|CDH|TelemGen|45
+DEBUG|CDH|T|CDH|GPS,0/1/1T0:0:0,0,0,0,0,0|SEP,1,1,1,1,0
+DEBUG|CDH|Writing SPI to pin (28): C|EPS|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (27): C|ADC|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (29): C|EXP|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|FreeMemory|4965
+DEBUG|CDH|Hotplug state: ADC[1] COMM[1] EXP1[1] SPARE[0]
+DEBUG|CDH|Separation [Separated]
+DEBUG|CDH|TelemGen|45
+DEBUG|CDH|T|CDH|GPS,0/1/1T0:0:0,0,0,0,0,0|SEP,1,1,1,1,0
+DEBUG|CDH|Writing SPI to pin (28): C|EPS|T
+DEBUG|CDH|Read SPI data: 
+DEBUG|CDH|Writing SPI to pin (27): C|ADC|T
