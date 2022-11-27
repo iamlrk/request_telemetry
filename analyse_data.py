@@ -5,7 +5,12 @@ import time
 
 
 def select_line(line):
-    return line.strip().startswith("T")
+    # this would work always in this scenerio because if it's not a debug file, then the 1st return would fail.
+    try:
+        return line.split("\t")[1].startswith("T")
+    except:
+        return line.strip().startswith("T")
+        
 
 def get_data(file_loc, debug = True):
     CDH_df = ADC_df = EXP_df = pd.DataFrame()
@@ -14,11 +19,10 @@ def get_data(file_loc, debug = True):
     with open(file_loc, 'r') as log:
         for line in log:
             if select_line(line):
-                epoch_time += 1
                 if debug:
+                    epoch_time += 1
                     is_telemetry, subsystem, instruments_readings = split_data(line, debug)
                 else:
-                    print('Hello')
                     epoch_time, is_telemetry, subsystem, instruments_readings = split_data(line, debug)
                     
                 if subsystem == 'CDH':
@@ -53,8 +57,12 @@ def split_data(line, debug = True):
     elif not debug:
         time_telemetry_details = line.split("\t")
         epoch_time = time_telemetry_details[0]
-        print(epoch_time)
-        
+        telemetry_subsystems_readings = time_telemetry_details[1].split('|')
+        is_telemetry = telemetry_subsystems_readings[0]
+        subsystem = telemetry_subsystems_readings[1]
+        instruments_readings = telemetry_subsystems_readings[2:]
+        return epoch_time, is_telemetry, subsystem, instruments_readings
+                
 
 def CDH_Subsystem(epoch_time, data, df):
     _df = ref_dataframes('CDH')
@@ -80,9 +88,9 @@ def EXP_Subsystem(epoch_time, data, df):
     _df = ref_dataframes('EXP')
     _ins_dict = {'Time':epoch_time,'Subsystems': 'EXP'}
     for instrument in data:
-         readings = instrument.split(",")
-         num_readings = [float(i) for i in readings[2:]]
-         _ins_dict[f'MPU_{readings[1]}'] = num_readings
+        readings = instrument.split(",")
+        num_readings = [float(i) for i in readings[1:]]
+        _ins_dict[f'{readings[0]}'] = num_readings
     _df = _df.append(_ins_dict, ignore_index=True)
     
     return pd.concat([df, _df])    
@@ -127,12 +135,12 @@ def cal_sun_pos(light_int: list):
     return np.arctan((A-C)/(B-D))*180/np.pi
 
 if  __name__=='__main__':
-    # CDH_df, ADC_df, EXP_df = get_data('CDH-Power-21-Nov-2022-14-51-32.txt')
-    CDH_df, ADC_df, EXP_df = get_data('log.txt', debug=False)
-    # print(ADC_df)
+    # CDH_df, ADC_df, EXP_df = get_data('logs\CDH-Power-21-Nov-2022-14-51-32.txt')
+    CDH_df, ADC_df, EXP_df = get_data('logs\log.txt', debug=False)
+    print(ADC_df)
     # ADC_df['SOL_ANG'] = ADC_df['SOL'].apply(cal_sun_pos)
     # print(CDH_df['GPS'])
     # plot_me([(ADC_df['Time']),ADC_df['SOL_ANG']])
-    # # print((ADC_df['SOL_ANG']))
+    # print((ADC_df['SOL_ANG'],ADC_df['ANG']))
     
     
