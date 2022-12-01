@@ -92,7 +92,7 @@ def CDH_Subsystem(epoch_time, data, df):
     
 def EPS_Subsystem(epoch_time, data, df):
     _df = ref_dataframes('EPS')
-    _ids = {65 : 'Charger', 66: 'VBatt', 67: '+5V', 68:'Radio', 69: 'SW1-5V', 70: 'SW2-5V', 71: 'SW3-5V'}
+    _ids = {65 : 'Charger', 66: 'VBatt', 67: '+5V', 68:'Radio', 69: 'SW1_5V', 70: 'SW2_5V', 71: 'SW3-5V'}
     _ins_dict = {'Time':epoch_time,'Subsystems': 'EPS'}
     for instrument in data:
         readings = instrument.split(",")
@@ -100,7 +100,7 @@ def EPS_Subsystem(epoch_time, data, df):
         if readings[0] == 'I':
             _ins_dict[f'I{_ids[num_readings[0]]}'] = num_readings[1:]
         else:
-            # print(num_readings[0:])
+            # print(readings[0])
             _ins_dict[f'{readings[0]}']= num_readings[0:]
     
     _df = pd.DataFrame([_ins_dict])
@@ -155,7 +155,7 @@ def ref_dataframes(subsystem: str):
     if subsystem == 'EXP':
         return pd.DataFrame(columns=['Time', 'Subsystems', 'THERM_P1', 'THERM_P2', 'I1', 'I2', 'P1A', 'P1B', 'P1C', 'P2A', 'P2B', 'P2C'])
     if subsystem == 'EPS':
-        return pd.DataFrame(columns=['Time', 'Subsystems', 'IVBatt', 'I+5V', 'IRadio', 'ISW1_5V', 'ISW2_5V', 'ISW3_5V', 'I7', 'ICharger', 'I_E', 'DA', 'DB', 'DC', 'C'])
+        return pd.DataFrame(columns=['Time', 'Subsystems', 'IVBatt', 'I+5V', 'IRadio', 'ISW1_5V', 'ISW2_5V', 'ISW3_5V', 'ICharger', 'I_E', 'DA', 'DB', 'DC', 'C'])
     
         
 
