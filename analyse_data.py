@@ -22,13 +22,14 @@ def get_data(file_loc, debug):
     epoch_time = {'CDH':0, 'ADC':0, 'EXP':0, 'EPS': 0} #setting epoch time 0 for the subsystems
     with open(file_loc, 'r') as log:
         for line in log:
+            # print('hello')
+            # print(line.split())
             if select_line(line, debug):
                 if debug:
                     is_telemetry, subsystem, instruments_readings = split_data(line, debug)
                     epoch_time[subsystem] += 1
                 else:
                     epoch_time, is_telemetry, subsystem, instruments_readings = split_data(line, debug)
-                    
                 if subsystem == 'CDH':
                     if 'CDH' not in create_df:
                         CDH_df = ref_dataframes('CDH')
@@ -76,7 +77,7 @@ def split_data(line, debug = True):
         return is_telemetry, subsystem, instruments_readings
 
     elif not debug:
-        time_telemetry_details = line.split("\t")
+        time_telemetry_details = line.split()
         epoch_time = time_telemetry_details[0]
         telemetry_subsystems_readings = time_telemetry_details[1].split('|')
         is_telemetry = telemetry_subsystems_readings[0]
@@ -185,15 +186,16 @@ def plot_me(values, Solar_Direction = True):
 
 def cal_sun_pos(light_int: list):
     light_int = np.array(light_int)
-    A, C, B, D = light_int[0], light_int[1], light_int[2], light_int[3]
+    C, A, D, B = light_int[0], light_int[1], light_int[2], light_int[3]
     return np.arctan((A-C)/(B-D))
 
 if  __name__=='__main__':
     # CDH_df, ADC_df, EXP_df, EPS_df = get_data('logs\CDH-6-3-Seperation-Switch-21-Nov-2022-15-14-53.txt')
-    CDH_df, ADC_df, EXP_df, EPS_df = get_data('logs/thermal_1129.txt', debug=False)
-    print(EPS_df)
+    CDH_df, ADC_df, EXP_df, EPS_df = get_data('logs\ADC-SolarSensor_WithAmbient-02-Dec-2022-15-56-30.txt', debug=True)
+    print(ADC_df['ANG'])
+    
     # ADC_df['SOL_ANG'] = ADC_df['SOL'].apply(cal_sun_pos)
-    # print(CDH_df['GPS'])
+    # print(ADC_df['GPS'])
     # plot_me([(ADC_df['Time']),ADC_df['SOL_ANG']])
     # print((ADC_df['SOL_ANG']),(ADC_df['ANG']))
     

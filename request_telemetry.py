@@ -34,8 +34,8 @@ def record_educube_telmetry(port: str, telemetry_gap=1, encoding='utf-8'):
             _last_time = _time
         
         _line = port.readline()
-        with open(f"logs\{board}-{exp}-{readable_time}.txt", 'a') as log:
-            if _line:
+        if _line:
+            with open(f"logs\{board}-{exp}-{readable_time}.txt", 'a') as log:
                 log.write(_line.decode(encoding=encoding))
 
 def record_comms(port, encoding='utf-8'):
@@ -50,15 +50,15 @@ def record_comms(port, encoding='utf-8'):
 
 
 if __name__ == '__main__':
-    board = "Comms" 
-    exp = "GPS"
-    portname = "COM8"
-    baudrate = 9600
+    board = "ADC" 
+    exp = "MPU_ACC_Diff_Pos"
+    portname = "COM9"
+    baudrate = 115200
 
     
     try:
         with pys.Serial(portname, baudrate, timeout=1) as port:
-            # record_educube_telmetry(port)
-            record_comms(port)
+            record_educube_telmetry(port)
+            # record_comms(port)
     except KeyboardInterrupt:
         pass
