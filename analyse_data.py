@@ -10,7 +10,7 @@ def select_line(line, debug=True):
     if not debug:
         # print(line.split())
         try:
-            return line.split()[1].startswith("T") # first value checks for telemetry and second is checking for debug
+            return line.split()[2].startswith("T") # first value checks for telemetry and second is checking for debug
         except:
             return False # first value checks for telemetry and second is checking for debug
     else:
@@ -78,8 +78,8 @@ def split_data(line, debug = True):
 
     elif not debug:
         time_telemetry_details = line.split()
-        epoch_time = time_telemetry_details[0]
-        telemetry_subsystems_readings = time_telemetry_details[1].split('|')
+        epoch_time = int(time_telemetry_details[0])
+        telemetry_subsystems_readings = time_telemetry_details[2].split('|')
         is_telemetry = telemetry_subsystems_readings[0]
         subsystem = telemetry_subsystems_readings[1]
         instruments_readings = telemetry_subsystems_readings[2:]
@@ -132,7 +132,10 @@ def EXP_Subsystem(epoch_time, data, df):
     _ins_dict = {'Time':epoch_time,'Subsystems': 'EXP'}
     for instrument in data:
         readings = instrument.split(",")
-        num_readings = [float(i) for i in readings[1:]]
+        if readings[1:] != ['']:
+            num_readings = [float(i) for i in readings[1:]]
+        else:
+            num_readings = [0]
         if readings[0].startswith("I"):
             # print(num_readings)
             if num_readings[0] == 64:
@@ -140,7 +143,7 @@ def EXP_Subsystem(epoch_time, data, df):
             elif num_readings[0] == 67:
                 _ins_dict['I2'] = num_readings[1:]
         else:
-            # print(num_readings[0:])
+            print(num_readings[0])
             _ins_dict[f'{readings[0]}'] = (num_readings[0])
     
     _df = pd.DataFrame([_ins_dict])

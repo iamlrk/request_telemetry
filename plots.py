@@ -19,7 +19,7 @@ from analyse_data import get_data
 
 SIGMA = 5.670374419e-8
 
-def plot_plots(file_loc,subsystem, instrument, debug=True,view_plot = False, save_plot = False, animate = False):
+def plot_plots(file_loc,subsystem, instrument, exp, power=False,debug=True,view_plot = False, save_plot = False, animate = False):
     plt_graphs = {}
     
     CDH_df, ADC_df, EXP_df, EPS_df = get_data(file_loc, debug)
@@ -27,23 +27,30 @@ def plot_plots(file_loc,subsystem, instrument, debug=True,view_plot = False, sav
     
     if subsystem == 'EPS':    
         if instrument in ['IVBatt', 'I+5V', 'IRadio', 'ISW1_5V', 'ISW2_5V', 'ISW3_5V', 'ICharger']:
-            fig,ax = plt.subplots()
-            ax.plot(EPS_df['Time'],
-                    EPS_df[instrument].str[0],
-                    color="red")
-            ax.set_xlabel("Time - s") # , fontsize = 14)
-            ax.set_ylabel("Voltage",
+            if not power:
+                fig,ax = plt.subplots()
+                ax.plot(EPS_df['Time'],
+                        EPS_df[instrument].str[0],
                         color="red")
-
-
-            
-            ax2=ax.twinx()
-            ax2.plot(EPS_df['Time'], 
-                    EPS_df[instrument].str[1],
-                    color="blue")
-            ax2.set_ylabel("Current",color="blue") # ,fontsize=14)
-            plt.title(f"{subsystem}-{instrument}")
-            plt_graphs[f'{subsystem}_{instrument}'] = plt
+                ax.set_xlabel("Time - s") # , fontsize = 14)
+                ax.set_ylabel("Voltage",
+                            color="red")
+                
+                ax2=ax.twinx()
+                ax2.plot(EPS_df['Time'], 
+                        EPS_df[instrument].str[1],
+                        color="blue")
+                ax2.set_ylabel("Current",color="blue") # ,fontsize=14)
+                plt.title(f"{subsystem}-{instrument}-IV")
+                plt_graphs[f'{subsystem}_{instrument}'] = plt
+            elif power:
+                fig, ax = plt.subplots()
+                ax.plot(EPS_df['Time'], EPS_df[instrument].str[0]*EPS_df[instrument].str[1])
+                ax.set_xlabel('Time')
+                ax.set_ylabel('Power mWatts')
+                ax.set_title(f"{subsystem}-{instrument}-Power")
+                
+                
         
         elif instrument == 'I_E':
             fig,ax = plt.subplots()
@@ -60,16 +67,26 @@ def plot_plots(file_loc,subsystem, instrument, debug=True,view_plot = False, sav
             # print(EPS_df[instrument])
             ax.plot(EPS_df['Time'], EPS_df[instrument].str[0])
             ax.set_xlabel("Time - s") # , fontsize = 14)
+            ax.set_xlim(20, 100)
             plt.title(f"{subsystem}-{instrument}")
             plt_graphs[f'{subsystem}_{instrument}'] = plt
         
         elif instrument == 'DA':
             #todo : plot it
-            pass
+            fig, axs = plt.subplots(1, sharex=True, sharey=True)
+            # fig.suptitle('PS_DA')
+            plt.plot(EPS_df['Time'], EPS_df['DA'].str[1]*EPS_df['DA'].str[2])
+            plt.title('EPS-DA')
+            plt.xlabel('Time - s')
+            plt.ylabel('Power - mW')
+            
+            # axs[0].plot(EPS_df['Time'], EPS_df['DA'].str[0])
+            # axs[1].plot(EPS_df['Time'], EPS_df['DA'].str[1])
+            # axs[2].plot(EPS_df['Time'], EPS_df['DA'].str[2])
             
     elif subsystem == 'EXP':
         if instrument in ['THERM_P1', 'THERM_P2']:
-            fig,ax = plt.subplots()
+            # fig,ax = plt.subplots()
             # print(EPS_df[instrument])
             ax.plot(EPS_df['Time'], EPS_df[instrument].str[0])
             ax.set_xlabel("Time - s") # , fontsize = 14)
@@ -121,24 +138,31 @@ def plot_plots(file_loc,subsystem, instrument, debug=True,view_plot = False, sav
                 plt.plot(x,y3, label = f'z{instrument}')
                 plt.title(f'{instrument}')
                 plt.xlabel("Time - s") # , fontsize = 14)
-                plt.ylabel("Acceleration - $mm/s^2$") # , fontsize = 14)
+                # plt.ylabel("Acceleration - $mm/s^2$") # , fontsize = 14)
+                plt.ylabel("milligauss") # , fontsize = 14)
                 
                 plt.legend(loc='upper left')
                 plt.tight_layout()
         elif instrument == 'ANG':
+            fig = plt.figure()
+            ax = fig.add_subplot(111, projection='polar')
+            c = ax.scatter(ADC_df['ANG'].str[0], ADC_df['Time'],c='orange' ,s=40, cmap='hsv', alpha=0.75)
             
-            plt.plot(ADC_df['Time'], ADC_df['ANG'].str[0])
-                    
-    
+            # plt.polar(ADC_df['Time'], ADC_df['ANG'].str[0], color="green", marker='x')
+            plt.title(f'Angle of Sun without Ambient Light')
+            # plt.grid(True)
+            
+            # plt.xlabel("Time - s") # , fontsize = 14)
+            # plt.ylabel("Light Intensity", color="green")
     if view_plot:
         plt.tight_layout()
-        plt.grid()
+        plt.grid(True)
         plt.show()
     
     if save_plot:
         plt.tight_layout()
         plt.grid()
-        fig.savefig(f'plots\{subsystem}_{instrument}.png',
+        fig.savefig(f'plots\{subsystem}_{instrument}_{exp}.png',
             format='png',
             dpi=200,
             bbox_inches='tight')
@@ -150,14 +174,23 @@ def plot_plots(file_loc,subsystem, instrument, debug=True,view_plot = False, sav
 if __name__ == '__main__':
     
     # file_loc = 'logs\ADC-SolarSensor_WithAmbient-02-Dec-2022-15-56-30.txt'
-    file_loc = "logs\CDH-6-3-Seperation-Switch-21-Nov-2022-15-14-53.txt"
+    # file_loc = 'logs\ADC-SolarSensor_WithoutAmbient-02-Dec-2022-16-02-59.txt'
+    # file_loc = "logs\CDH-6-3-Seperation-Switch-21-Nov-2022-15-14-53.txt"
+    # file_loc = "logs\ADC-MPU_ACC-02-Dec-2022-14-54-47.txt"
+    # file_loc = 'logs\CDH-Power-21-Nov-2022-14-51-32.txt'
+    # file_loc = 'logs\EPS-standby.dat'
+    # file_loc = 'logs\EPS_EXP_P1.dat'
+    file_loc = 'logs\EPS_ADC_magtorq.dat'
     # subsystem = 'ADC'
+    # exp = 'without_ambient'
+    # exp = 'with_ambient'
     subsystem = 'EPS'
-    
-    instruments = ['IVBatt', 'I+5V', 'IRadio', 'ISW1_5V', 'ISW2_5V', 'ICharger', 'I_E', 'DB', 'DC', 'C']
-    # instrument = 'ANG' # ['MPU_ACC', 'MPU_GYR', 'MPU_MAG']
+    # exp = 'seperation_switch'
+    exp = 'ADC-MAG'
+    instruments = ['IVBatt', 'I+5V', 'IRadio', 'ISW1_5V', 'ISW2_5V', 'ISW3_5V','ICharger', 'I_E', 'DA','DB', 'DC', 'C']
+    # instrument = 'ANG' #'ANG' # ['MPU_ACC', 'MPU_GYR', 'MPU_MAG']
     for instrument in instruments:
-        plt_values = plot_plots(file_loc,subsystem, instrument, debug=True,animate=False,view_plot=False, save_plot=True)
+        plt_values = plot_plots(file_loc,subsystem, instrument, exp, power=True,debug=False,animate=False,view_plot=False, save_plot=True)
         # plt_values[f'{subsystem}_{instrument}'].show()
     
     # file_loc = 'logs\thermal_1129.txt'
