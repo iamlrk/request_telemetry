@@ -1,0 +1,2 @@
+- Requests Telemetry from different Subsystems of EduCube.
+- Analyses Debug and non-debug files by plotting required graphs and time series for various instruments, sensors and actuators.
