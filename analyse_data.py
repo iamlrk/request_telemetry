@@ -5,14 +5,13 @@ import time
 
 
 def select_line(line, debug=True):
-    # this would work always in this scenerio because if it's not a debug file, then the 1st return would fail. 
-    # As there is no \t in debug filee, there will be one value in the array so it will fail the try
+
     if not debug:
         # print(line.split())
         try:
-            return line.split()[2].startswith("T") # first value checks for telemetry and second is checking for debug
+            return line.split()[2].startswith("T")
         except:
-            return False # first value checks for telemetry and second is checking for debug
+            return False 
     else:
         return line.strip().startswith("T")
         
